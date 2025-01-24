@@ -93,6 +93,7 @@ data class AnimeData(
     val episodes: Int?,
     val score: Double?,
     val rating: String,
+    val images: Images,
     val image_url: String,
     val trailer: Trailer?,
     val genres: List<Genre>,

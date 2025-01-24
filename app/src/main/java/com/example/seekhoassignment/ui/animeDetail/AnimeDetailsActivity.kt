@@ -9,8 +9,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.seekhoassignment.R
 import com.example.seekhoassignment.adapter.AnimeAdapter
 import com.example.seekhoassignment.databinding.ActivityAnimeDetailsBinding
@@ -69,7 +71,8 @@ class AnimeDetailsActivity : AppCompatActivity() {
                     mBinding.tvGenre.text ="Genres: " + genreStr.substringBeforeLast(",")
                     mBinding.tvEpisodes.text ="Episodes: " + it.data?.data?.episodes.toString()
 
-                    mBinding.trailerVideoView.addYouTubePlayerListener(
+                    this.lifecycle.addObserver(mBinding.videoTrailerView)
+                    mBinding.videoTrailerView.addYouTubePlayerListener(
                         object :
                             AbstractYouTubePlayerListener() {
                             override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
@@ -77,6 +80,13 @@ class AnimeDetailsActivity : AppCompatActivity() {
                                 it.data?.data?.trailer?.url?.let { it1 ->
                                     youTubePlayer.loadVideo(
                                         it1, 0f)
+                                }?:run{
+                                    mBinding.videoTrailerView.visibility = View.GONE
+                                    mBinding.posterImageView.visibility = View.VISIBLE
+                                    Glide.with(this@AnimeDetailsActivity).load(it.data?.data?.images?.jpg?.image_url).into(mBinding.posterImageView)
+                                    val params = mBinding.tvAnimeTitle.layoutParams as ConstraintLayout.LayoutParams
+                                    params.topToBottom = mBinding.posterImageView.id
+
                                 }
                                 youTubePlayer.play()
                                 youTubePlayer.setLoop(true)

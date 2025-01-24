@@ -24,6 +24,8 @@
 
         <TextView
             android:id="@+id/tvTitle"
+            android:lineBreakStyle="normal"
+            android:lines="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/ivPoster"
@@ -31,7 +33,6 @@
             android:singleLine="false"
             android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="textMultiLine"
             android:layout_marginTop="5dp"
             app:layout_constraintTop_toTopOf="parent"
             android:text="Title" />
