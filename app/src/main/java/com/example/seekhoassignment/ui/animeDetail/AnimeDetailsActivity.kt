@@ -47,14 +47,17 @@ class AnimeDetailsActivity : AppCompatActivity() {
             when(it){
                 is Resource.Error -> {
                     mBinding.progressBar.visibility = View.GONE
+                    mBinding.mainLayout.visibility = View.GONE
                     Toast.makeText(this@AnimeDetailsActivity, "Unable to load the Anime. Please try again.", Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Loading -> {
                     mBinding.progressBar.visibility = View.VISIBLE
+                    mBinding.mainLayout.visibility = View.GONE
 
                 }
                 is Resource.Success -> {
                     mBinding.progressBar.visibility = View.GONE
+                    mBinding.mainLayout.visibility = View.VISIBLE
                    mBinding.tvAnimeTitle.text = it.data?.data?.title
                     mBinding.tvPlot.text = "Plot: \n" +it.data?.data?.synopsis
                     mBinding.tvRating.text ="Rating: "+ it.data?.data?.score.toString()
